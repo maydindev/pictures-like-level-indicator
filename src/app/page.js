@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import styles from "./page.module.css";
+//import Image from "next/image";
+//import styles from "./page.module.css";
 
 export default function Home() {
   const [images, setImages] = useState([]);
@@ -10,32 +10,17 @@ export default function Home() {
   // Resim eklemek için fonksiyon
   const handleAddImage = () => {
     const newImageUrl = `https://picsum.photos/seed/${crypto.randomUUID()}/200/300`;
-    setImages([...images, { url: newImageUrl, likeCount: 0, sizeStep: 0 }]);
+    setImages([...images, { url: newImageUrl, likeCount: 0, fontSize: 2 }]);
   };
 
-  // Like sayısını artırmak için fonksiyon
+  // Like sayısını artırmak ve emoji boyutunu büyütmek için fonksiyon
   const handleLike = (index) => {
     const updatedImages = [...images];
-    updatedImages[index].sizeStep = (updatedImages[index].sizeStep + 1) % 3;
+    updatedImages[index].fontSize += 2; // Her tıklandığında fontSize'ı 2rem artır
     setImages(updatedImages);
   };
 
-  // Emoji boyutunu değiştirmek için fonksiyon
-  const getEmojiSize = (sizeStep) => {
-    switch (sizeStep) {
-      case 0:
-        return "2rem";
-      case 1:
-        return "4rem";
-      case 2:
-        return "6rem";
-      default:
-        return "2rem";
-    }
-  };
-
   const emojiStyle = {
-    fontSize: "2rem",
     transition: "font-size 0.3s ease",
     textDecoration: "none",
     cursor: "pointer",
@@ -50,7 +35,7 @@ export default function Home() {
     borderRadius: "10px",
     width: "150px",
     cursor: "pointer",
-  }
+  };
 
   return (
     <>
@@ -59,7 +44,11 @@ export default function Home() {
         {images.map((image, index) => (
           <span key={index}>
             <input type="image" alt="LoremPicsum" src={image.url} />
-            <a href="#" onClick={() => handleLike(index)} style={{ ...emojiStyle, fontSize: getEmojiSize(image.sizeStep) }}>
+            <a
+              href="#"
+              onClick={() => handleLike(index)}
+              style={{ ...emojiStyle, fontSize: `${image.fontSize}rem` }}
+            >
               👍🏻
             </a>
           </span>
@@ -68,6 +57,7 @@ export default function Home() {
     </>
   );
 }
+
 
 
 
