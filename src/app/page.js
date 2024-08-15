@@ -43,10 +43,9 @@ export default function Home() {
       <div>
         {images.map((image, index) => (
           <span key={index}>
-            <input type="image" alt="LoremPicsum" src={image.url} />
+            <input type="image" alt="LoremPicsum" src={image.url} onClick={() => handleLike(index)}/>
             <a
               href="#"
-              onClick={() => handleLike(index)}
               style={{ ...emojiStyle, fontSize: `${image.fontSize}rem` }}
             >
               👍🏻
